@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,20 +15,21 @@ import kotlinx.coroutines.launch
 import com.example.lab08.ui.theme.Lab08Theme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: TaskViewModel by viewModels {
+        val db = Room.databaseBuilder(
+            applicationContext,
+            TaskDatabase::class.java,
+            "task_db"
+        ).build()
+        TaskViewModelFactory(db.taskDao())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             Lab08Theme {
-                val db = Room.databaseBuilder(
-                    applicationContext,
-                    TaskDatabase::class.java,
-                    "task_db"
-                ).build()
-
-                val taskDao = db.taskDao()
-                val viewModel = TaskViewModel(taskDao)
-
                 TaskScreen(viewModel)
             }
         }
