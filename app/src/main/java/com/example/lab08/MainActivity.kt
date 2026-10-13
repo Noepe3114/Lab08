@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// xd
 @Composable
 fun TaskScreen(viewModel: TaskViewModel) {
     val tasks by viewModel.tasks.collectAsState()
