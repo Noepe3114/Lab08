@@ -19,6 +19,7 @@ interface TaskDao {
     @Query("SELECT COUNT(*) FROM tasks WHERE is_completed = 0")
     suspend fun getPendingCount(): Int
 
+
     @Insert
     suspend fun insertTask(task: Task)
     @Update
